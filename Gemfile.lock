@@ -1,0 +1,25 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    logger (1.7.0)
+    nio4r (2.7.4)
+    puma (6.6.1)
+      nio4r (~> 2.0)
+    rack (3.2.3)
+    rack-cors (3.0.0)
+      logger
+      rack (>= 3.0.14)
+    rackup (2.2.1)
+      rack (>= 3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  puma
+  rack
+  rack-cors
+  rackup
+
+BUNDLED WITH
+   1.17.2

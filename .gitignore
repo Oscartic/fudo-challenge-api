@@ -1,0 +1,82 @@
+# Ruby version manager files
+.ruby-version
+.ruby-gemset
+
+# Bundler
+/.bundle/
+/vendor/bundle
+vendor/bundle
+
+# Logs
+*.log
+log/*
+*.log.*
+
+# Temporary files
+tmp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# RubyMine
+.rakeTasks
+
+# Coverage reports
+/coverage/
+/coverage.data
+/.coverage
+
+# RSpec
+/spec/reports/
+/spec/examples.txt
+
+# Test artifacts
+.rspec_status
+
+# Documentation
+/doc/
+/rdoc/
+/.yardoc/
+
+# Build artifacts
+*.gem
+*.rbc
+/.config
+/InstalledFiles
+/pkg/
+/spec/reports/
+/test/tmp/
+/test/version_tmp/
+
+# Backup files
+*.bak
+*.orig
+
+# Cache
+.cache/
+.sass-cache/
+
