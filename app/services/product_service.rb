@@ -1,27 +1,13 @@
 require "thread"
+require_relative "../models/product"
 
-class Product 
-    attr_reader :id
-    attr_accessor :name, :price 
-    
-    def initialize(id, name, price)
-        @id = id
-        @name = name
-        @price = price
-    end
-
-    def to_h 
-        { id: @id, name: @name, price: @price }
-    end
-end
-
-class ProductRepository
+class ProductService
     def initialize 
         @seq = 0 
         @products = {}
         @mutex = Mutex.new
     end
-
+    
     def all
         @mutex.synchronize do
             @products.values.map(&:to_h)
@@ -56,7 +42,7 @@ class ProductRepository
         [product.to_h, nil]
     end
 
-    def get(id)
+    def find(id)
         @mutex.synchronize do
             @products[id]
         end
