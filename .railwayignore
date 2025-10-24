@@ -1,0 +1,4 @@
+vendor/
+.git/
+*.log
+.DS_Store
