@@ -1,53 +1,39 @@
 require "json"
 require "rack"
-require "pry"
 
-require_relative "app/json_body_parser"
-require_relative "app/product_repository"
+require_relative "app/controllers/base_controller"
+require_relative "app/controllers/products_controller"
+require_relative "app/controllers/health_controller"
+require_relative "app/middleware/json_body_parser"
 
-STORE = ProductRepository.new
+PRODUCTS_CONTROLLER = ProductsController.new
+HEALTH_CONTROLLER = HealthController.new
 
 use Rack::ContentLength
 use Rack::Deflater
 use JsonBodyParser
 
 map "/health" do 
-    run proc { |_env| 
-        [200, { "content-type" => "application/json" }, [JSON.dump({ message: "OK" })]]
-    } 
+  run HEALTH_CONTROLLER
 end
 
-# /products
-map "/products" do
-    run proc { |env|
-      req = Rack::Request.new(env)
+map "/api/products" do
+  run PRODUCTS_CONTROLLER
+end
 
-    #   binding.pry  
-      
-    case [req.request_method, req.path_info]
-    when ["GET", "/"], ["GET", "/list"]
-        # Lista de productos
-        [200, { "content-type" => "application/json" }, [JSON.dump(STORE.all)]]
-        
-    when ["POST", "/"], ["POST", "/create"]
-        payload = env["parsed_body"] || {}
-        created, errors = STORE.create(payload)
-        if errors
-          [422, { "content-type" => "application/json" }, [JSON.dump({ errors: errors })]]
-        else
-          headers = {
-            "content-type" => "application/json",
-            "location"     => "/products/#{created[:id]}"
-          }
-          [201, headers, [JSON.dump(created)]]
-        end
-  
-    else
-        [404, { "content-type" => "application/json" }, [JSON.dump({ error: "not found" })]]
-    end
-    }
-  end
+map "/" do
+  run proc { |_env|
+    [200, { "content-type" => "application/json" }, [JSON.dump({
+      message: "Fudo Challenge API",
+      version: "1.0.0",
+      endpoints: ["/health", "/api/products"]
+    })]]
+  }
+end
 
 run proc { |_env| 
-    [404, { "content-type" => "application/json" }, [JSON.dump({ message: "Not Found, please ckeck ep" })]] 
+  [404, { "content-type" => "application/json" }, [JSON.dump({ 
+    error: "Not Found",
+    message: "Check available endpoints: /health, /api/products"
+  })]]
 }
