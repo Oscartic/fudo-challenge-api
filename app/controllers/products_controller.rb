@@ -26,8 +26,6 @@ class ProductsController < BaseController
         end
     end
 
-    private
-
     def create(env)
         attrs = env["parsed_body"]
         return bad_request_response(["body is required"]) if attrs.nil? || attrs.empty?
